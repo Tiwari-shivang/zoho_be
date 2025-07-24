@@ -1,14 +1,14 @@
 package com.shivang.ZOHO.DTOs.requestDTOs;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class signUpRequest {
-    private String email, password, first_name, last_name, gender, role_id, dob;
+public class loginRequest {
+    private String email, password;
 }

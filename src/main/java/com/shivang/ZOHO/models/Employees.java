@@ -1,8 +1,11 @@
 package com.shivang.ZOHO.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
+import java.sql.SQLType;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,6 +13,8 @@ import java.util.UUID;
 @Table(name = "employees")
 public class Employees implements Serializable {
     @Id
+    @GeneratedValue(generator = "UUID")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID id;
     private String first_name, last_name, gender, phone, designation;
     private Date dob, joining_date;
