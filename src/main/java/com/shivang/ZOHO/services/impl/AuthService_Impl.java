@@ -17,8 +17,6 @@ import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +43,7 @@ public class AuthService_Impl implements authService {
         if(user != null){
             boolean isCorrect = request.getPassword().matches(user.getPassword());
             employeeDetailResponse empResponse = employeeService.getEmpByUID(user.getId());
-            loginResponse response = new loginResponse(user.getId(), empResponse.getFirst_name(), empResponse.getLast_name(), user.getEmail(), user.getRole().getRole_name(), user.is_active(), user.getCreated_date(), user.getUpdated_date());
+            loginResponse response = new loginResponse(user.getId(), empResponse.getFirst_name(), empResponse.getLast_name(), user.getRole().getRole_name(), user.getEmail(), user.is_active(), user.getCreated_date(), user.getUpdated_date());
             System.out.println(user);
             return response;
         }
