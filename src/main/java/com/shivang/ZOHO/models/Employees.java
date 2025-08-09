@@ -24,7 +24,7 @@ public class Employees implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Departments department;
     public UUID getId() {
@@ -73,6 +73,14 @@ public class Employees implements Serializable {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+
+    public Departments getDepartment(){
+        return department;
+    }
+
+    public void setDepartment(Departments department){
+        this.department = department;
     }
 
     public Date getDob() {
