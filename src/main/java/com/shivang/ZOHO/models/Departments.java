@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,6 +14,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "departments")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Departments implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
