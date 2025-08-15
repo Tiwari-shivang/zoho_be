@@ -57,6 +57,7 @@ public class AuthController {
         }
         catch (Exception e){
             ErrorResponse error = new ErrorResponse(500, e.getMessage());
+            System.out.println(e.getMessage());
             return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
