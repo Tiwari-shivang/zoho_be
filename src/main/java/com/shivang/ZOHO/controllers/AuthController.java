@@ -2,6 +2,7 @@ package com.shivang.ZOHO.controllers;
 
 import com.shivang.ZOHO.DTOs.requestDTOs.loginRequest;
 import com.shivang.ZOHO.DTOs.requestDTOs.signUpRequest;
+import com.shivang.ZOHO.DTOs.responseDTOs.ErrorResponse;
 import com.shivang.ZOHO.DTOs.responseDTOs.loginResponse;
 import com.shivang.ZOHO.DTOs.responseDTOs.signUpResponse;
 import com.shivang.ZOHO.DTOs.responseDTOs.tokenResponse;
@@ -48,9 +49,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<signUpResponse> signup(@RequestBody signUpRequest request){
+    public ResponseEntity<?> signup(@RequestBody signUpRequest request){
         request.setPassword(encoder.encode(request.getPassword()));
-        signUpResponse response = service.signup(request);
-        return ResponseEntity.ok(response);
+        try{
+            signUpResponse response = service.signup(request);
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception e){
+            ErrorResponse error = new ErrorResponse(500, e.getMessage());
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
     }
 }

@@ -2,8 +2,10 @@ package com.shivang.ZOHO.services.impl;
 
 import com.shivang.ZOHO.DTOs.requestDTOs.AssignDepartment;
 import com.shivang.ZOHO.DTOs.responseDTOs.employeeDetailResponse;
+import com.shivang.ZOHO.DTOs.responseDTOs.employeeUserDetails;
 import com.shivang.ZOHO.models.Departments;
 import com.shivang.ZOHO.models.Employees;
+import com.shivang.ZOHO.models.Users;
 import com.shivang.ZOHO.repositories.EmployeeRepo;
 import com.shivang.ZOHO.services.departmentService;
 import com.shivang.ZOHO.services.employeeService;
@@ -11,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -45,5 +49,24 @@ public class EmployeeService_Impl implements employeeService {
             return new employeeDetailResponse(updatedEmployee.getId(), updatedEmployee.getFirst_name(), updatedEmployee.getLast_name(), updatedEmployee.getGender(), updatedEmployee.getPhone(), updatedEmployee.getDesignation(), updatedEmployee.getDepartment(), updatedEmployee.getDob(), updatedEmployee.getJoining_date());
         }
         return null;
+    }
+
+    @Override
+    public employeeUserDetails getEmpById(UUID Id){
+        Employees emp = employeeRepo.findById(Id).orElseThrow(() -> new RuntimeException("Employee not found"));
+        Users associatedUserDetails = emp.getUser();
+        return new employeeUserDetails(Id, associatedUserDetails.getId(), associatedUserDetails.is_active(), emp.getFirst_name(), emp.getLast_name(), emp.getGender(), emp.getPhone(), emp.getDesignation(), associatedUserDetails.getEmail(), emp.getDepartment(), emp.getDob(), emp.getJoining_date());
+    }
+
+    @Override
+    public List<employeeUserDetails> getEmployees(String searchedVal, Integer limit){
+        List<Employees> employees = employeeRepo.findAll();
+        List<employeeUserDetails> responseList = new ArrayList<>();
+        for(Employees Employee : employees){
+            Users userDetails = Employee.getUser();
+            employeeUserDetails empDetails = new employeeUserDetails(Employee.getId(), userDetails.getId(), userDetails.is_active(), Employee.getFirst_name(), Employee.getLast_name(), Employee.getGender(), Employee.getPhone(), Employee.getDesignation(), userDetails.getEmail(), Employee.getDepartment(), Employee.getDob(), Employee.getJoining_date());
+            responseList.add(empDetails);
+        }
+        return responseList;
     }
 }

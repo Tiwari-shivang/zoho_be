@@ -26,7 +26,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeHttpRequests(authRequest -> authRequest.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated()).csrf(csrf -> csrf.disable()).userDetailsService(service).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
+        return httpSecurity.authorizeHttpRequests(authRequest -> authRequest.requestMatchers("/api/auth/**", "/api/public/**").permitAll().anyRequest().authenticated()).csrf(csrf -> csrf.disable()).userDetailsService(service).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Bean

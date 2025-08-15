@@ -20,7 +20,7 @@ public class Employees implements Serializable {
     private Date dob, joining_date;
 
     // ------ Foreign keys here
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users user;
 

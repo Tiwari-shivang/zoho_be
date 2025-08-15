@@ -1,7 +1,6 @@
 package com.shivang.ZOHO.security;
 
 import com.shivang.ZOHO.services.impl.UserService_Impl;
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().startsWith("/api/auth")){
+        if(request.getServletPath().startsWith("/api/auth") || request.getServletPath().startsWith("/api/public")){
             filterChain.doFilter(request, response);
             return;
         }
@@ -39,8 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
             if(jwtUtils.validateToken(token, user)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-                filterChain.doFilter(request, response);
             }
         }
+        filterChain.doFilter(request, response);
     }
 }
