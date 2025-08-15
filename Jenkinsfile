@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_USER = 'shivang424'
-        DOCKER_HUB_PASS = credentials('docker-hub-cred') // Jenkins credentials ID
+        DOCKER_HUB_PASS = credentials('docker-hub-creds') // Jenkins credentials ID
         IMAGE_NAME = 'shivang424/zoho-img'
     }
 
