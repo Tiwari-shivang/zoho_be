@@ -55,6 +55,7 @@ public class AuthController {
             signUpResponse response = service.signup(request);
             return ResponseEntity.ok(response);
         }
+
         catch (Exception e){
             ErrorResponse error = new ErrorResponse(500, e.getMessage());
             System.out.println(e.getMessage());
