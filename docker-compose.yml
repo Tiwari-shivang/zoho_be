@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:9.0
+    container_name: mysql-container
+    networks:
+      - spring-network
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=EMS
+    volumes:
+      - mysql_db:/var/lib/mysql
+      - ./dbInit:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      interval: 5s
+      retries: 5
+  spring:
+    image: zoho-img:latest
+    container_name: spring-container
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - spring-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-container:3306/EMS
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+    command: >
+      java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      -jar /app/app.jar
+volumes:
+  mysql_db:
+networks:
+  spring-network:
