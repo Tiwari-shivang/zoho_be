@@ -1,16 +1,21 @@
 package com.shivang.ZOHO.models;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
 import java.sql.SQLType;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employees implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -18,6 +23,7 @@ public class Employees implements Serializable {
     private UUID id;
     private String first_name, last_name, gender, phone, designation;
     private Date dob, joining_date;
+    private LocalTime start_shift, end_shift;
 
     // ------ Foreign keys here
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

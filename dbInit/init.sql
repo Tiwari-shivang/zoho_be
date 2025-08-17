@@ -48,6 +48,8 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `department_id` VARCHAR(100) DEFAULT NULL,
   `designation` VARCHAR(255) DEFAULT NULL,
   `joining_date` DATETIME(6) DEFAULT NULL,
+  `shift_start` time DEFAULT NULL,
+  `shift_end` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `department_id` (`department_id`),
   KEY `employees_ibfk_1` (`user_id`),
